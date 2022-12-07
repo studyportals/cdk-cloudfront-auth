@@ -20,6 +20,13 @@ export interface StoredConfig {
   nonceSigningSecret: string
   logLevel: keyof typeof LogLevel
   requireGroupAnyOf?: string[] | null
+  allowedCriterias?: AllowedCriterias
+}
+
+export interface AllowedCriterias {
+  allowedUserAgents?: string[]
+  allowedURIs?: string[]
+  allowedIPs?: string[]
 }
 
 export interface Config extends StoredConfig {

@@ -1,4 +1,4 @@
-import { AuthLambdas, CloudFrontAuth } from "@henrist/cdk-cloudfront-auth"
+import { AuthLambdas, CloudFrontAuth } from "@studyportals/cdk-cloudfront-auth"
 import * as cdk from "aws-cdk-lib"
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront"
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins"

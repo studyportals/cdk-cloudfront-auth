@@ -12,9 +12,13 @@ import { LambdaConfig } from "@henrist/cdk-lambda-config"
 import { RetrieveClientSecret } from "./client-secret"
 import { ClientUpdate } from "./client-update"
 import { GenerateSecret } from "./generate-secret"
-import { StoredConfig } from "./handlers/util/config"
+import { AllowedCriterias, StoredConfig } from "./handlers/util/config"
 import { AuthLambdas } from "./lambdas"
 import { Construct } from "constructs"
+import { IRole } from "aws-cdk-lib/aws-iam"
+import { ClientCreate } from "./client-create"
+import { IUserPoolClient } from "aws-cdk-lib/aws-cognito"
+import { DescribeUserPool } from "./describe-user-pool"
 
 export interface CloudFrontAuthProps {
   /**
@@ -34,7 +38,8 @@ export interface CloudFrontAuthProps {
    *
    * @example `${domain.domainName}.auth.${region}.amazoncognito.com`
    */
-  cognitoAuthDomain: string
+  cognitoAuthDomain?: string
+
   authLambdas: AuthLambdas
   /**
    * @default /auth/callback
@@ -66,6 +71,23 @@ export interface CloudFrontAuthProps {
    * access any resource.
    */
   requireGroupAnyOf?: string[]
+
+  httpHeaders?: {
+    [key: string]: string
+  }
+
+  oauthScopes?: string[]
+
+  userPoolAssumedRole?: IRole
+
+  allowedCriterias?: AllowedCriterias
+
+  mode: Mode
+}
+
+export enum Mode {
+  SPA = "SPA",
+  STATIC_SITE = "STATIC_SITE",
 }
 
 export interface UpdateClientProps {
@@ -91,13 +113,14 @@ export class CloudFrontAuth extends Construct {
 
   private readonly userPool: cognito.IUserPool
   private readonly clientCreated: boolean
-  public readonly client: cognito.UserPoolClient
+  public readonly client: cognito.IUserPoolClient
 
   private readonly checkAuthFn: lambda.IVersion
   private readonly httpHeadersFn: lambda.IVersion
   private readonly parseAuthFn: lambda.IVersion
   private readonly refreshAuthFn: lambda.IVersion
   private readonly signOutFn: lambda.IVersion
+  private readonly userPoolAssumedRole?: IRole
 
   private readonly oauthScopes: string[]
 
@@ -108,8 +131,8 @@ export class CloudFrontAuth extends Construct {
     this.signOutRedirectTo = props.signOutRedirectTo ?? "/"
     this.signOutPath = props.signOutPath ?? "/auth/sign-out"
     this.refreshAuthPath = props.refreshAuthPath ?? "/auth/refresh"
-
-    this.oauthScopes = [
+    this.userPoolAssumedRole = props.userPoolAssumedRole
+    this.oauthScopes = props.oauthScopes ?? [
       "phone",
       "email",
       "profile",
@@ -120,23 +143,7 @@ export class CloudFrontAuth extends Construct {
     this.userPool = props.userPool
 
     this.clientCreated = !props.client
-    this.client =
-      props.client ??
-      props.userPool.addClient("UserPoolClient", {
-        // Note: The following must be kept in sync with the API
-        // call performed in ClientUpdate.
-        authFlows: {
-          userPassword: true,
-          userSrp: true,
-        },
-        oAuth: {
-          flows: {
-            authorizationCodeGrant: true,
-          },
-        },
-        preventUserExistenceErrors: true,
-        generateSecret: true,
-      })
+    this.client = props.client ?? this.createClient()
 
     const nonceSigningSecret = new GenerateSecret(this, "NonceSigningSecret")
       .value
@@ -147,46 +154,59 @@ export class CloudFrontAuth extends Construct {
       {
         client: this.client,
         userPool: this.userPool,
+        userPoolAssumedRole: this.userPoolAssumedRole,
       },
     )
 
+    const cognitoAuthDomain =
+      props.cognitoAuthDomain ??
+      new DescribeUserPool(this, "DescribeUserPool", {
+        userPool: this.userPool,
+        userPoolAssumedRole: this.userPoolAssumedRole,
+      }).getCognitoAuthDomain()
+
+    const httpHeaders = props.httpHeaders ?? {
+      "Content-Security-Policy":
+        "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; connect-src 'self'",
+      "Strict-Transport-Security":
+        "max-age=31536000; includeSubdomains; preload",
+      "Referrer-Policy": "same-origin",
+      "X-XSS-Protection": "1; mode=block",
+      "X-Frame-Options": "DENY",
+      "X-Content-Type-Options": "nosniff",
+      "Cache-Control": "no-cache",
+    }
+
     const config: StoredConfig = {
-      httpHeaders: {
-        "Content-Security-Policy":
-          "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; connect-src 'self'",
-        "Strict-Transport-Security":
-          "max-age=31536000; includeSubdomains; preload",
-        "Referrer-Policy": "same-origin",
-        "X-XSS-Protection": "1; mode=block",
-        "X-Frame-Options": "DENY",
-        "X-Content-Type-Options": "nosniff",
-        "Cache-Control": "no-cache",
-      },
+      httpHeaders,
       logLevel: props.logLevel ?? "warn",
       userPoolId: this.userPool.userPoolId,
       clientId: this.client.userPoolClientId,
       clientSecret: clientSecretValue,
       oauthScopes: this.oauthScopes,
-      cognitoAuthDomain: props.cognitoAuthDomain,
+      cognitoAuthDomain: cognitoAuthDomain,
       callbackPath: this.callbackPath,
       signOutRedirectTo: this.signOutRedirectTo,
       signOutPath: this.signOutPath,
       refreshAuthPath: this.refreshAuthPath,
       requireGroupAnyOf: props.requireGroupAnyOf,
+      nonceSigningSecret,
+      allowedCriterias: props.allowedCriterias,
       cookieSettings: {
-        /*
-        spaMode - consider if this should be supported
-        idToken: "Path=/; Secure; SameSite=Lax",
-        accessToken: "Path=/; Secure; SameSite=Lax",
-        refreshToken: "Path=/; Secure; SameSite=Lax",
-        nonce: "Path=/; Secure; HttpOnly; SameSite=Lax",
-        */
         idToken: "Path=/; Secure; HttpOnly; SameSite=Lax",
         accessToken: "Path=/; Secure; HttpOnly; SameSite=Lax",
         refreshToken: "Path=/; Secure; HttpOnly; SameSite=Lax",
         nonce: "Path=/; Secure; HttpOnly; SameSite=Lax",
       },
-      nonceSigningSecret,
+    }
+
+    if (props.mode === Mode.SPA) {
+      config.cookieSettings = {
+        idToken: "Path=/; Secure; SameSite=Lax",
+        accessToken: "Path=/; Secure; SameSite=Lax",
+        refreshToken: "Path=/; Secure; SameSite=Lax",
+        nonce: "Path=/; Secure; HttpOnly; SameSite=Lax",
+      }
     }
 
     this.checkAuthFn = new LambdaConfig(this, "CheckAuthFn", {
@@ -372,6 +392,48 @@ export class CloudFrontAuth extends Construct {
         ["COGNITO"].concat(
           this.userPool.identityProviders.map((it) => it.providerName),
         ),
+      userPoolAssumedRole: this.userPoolAssumedRole,
     })
+  }
+
+  /**
+   * Create Cognito client to use the proper URLs and OAuth scopes.
+   *
+   * TODO: In case the client configuration changes and is updated
+   *  by CloudFormation, this will not be reapplied causing the client
+   *  to not be correctly configured.
+   *  How can we avoid this scenario?
+   */
+  private createClient(): IUserPoolClient {
+    if (!this.userPoolAssumedRole) {
+      return this.userPool.addClient("UserPoolClient", {
+        // Note: The following must be kept in sync with the API
+        // calls performed in ClientUpdate and ClientCreate .
+        authFlows: {
+          userPassword: true,
+          userSrp: true,
+        },
+        oAuth: {
+          flows: {
+            authorizationCodeGrant: true,
+          },
+        },
+        preventUserExistenceErrors: true,
+        generateSecret: true,
+      })
+    } else {
+      return new ClientCreate(this, "cross-client", {
+        client: this.client,
+        userPool: this.userPool,
+        // signOutUrl: props.signOutUrl,
+        // callbackUrl: props.callbackUrl,
+        oauthScopes: this.oauthScopes,
+        callbackUrl: "https://localhost.com/auth/callback",
+        identityProviders: ["COGNITO"].concat(
+          this.userPool.identityProviders.map((it) => it.providerName),
+        ),
+        userPoolAssumedRole: this.userPoolAssumedRole,
+      }).getUserPoolClient()
+    }
   }
 }

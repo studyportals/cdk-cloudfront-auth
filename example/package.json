@@ -12,7 +12,7 @@
     "typescript": "4.9.3"
   },
   "dependencies": {
-    "@henrist/cdk-cloudfront-auth": "^2",
+    "@studyportals/cdk-cloudfront-auth": "^0",
     "aws-cdk-lib": "^2",
     "source-map-support": "^0.5"
   }

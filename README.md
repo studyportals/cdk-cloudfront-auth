@@ -3,7 +3,19 @@
 Easily add Cognito-based authorization to your CloudFront distribution,
 to place static files behind authorization.
 
-This is based on https://github.com/aws-samples/cloudfront-authorization-at-edge.
+This is based on https://github.com/henrist/cdk-cloudfront-auth.
+
+New features: 
+- Cognito clients can be created in new accounts if passed a role that can be assumed in that account
+- Cognito domain can be automatically retrieved if it's not known
+- `mode` is now sent as an input
+- `allowedCriterias` can now be used to pass exceptions from the authorization layer
+  - `allowedUserAgents?: string[]` is an array of regexes that will be used to match the current `user-agent`
+  - `allowedURIs?: string[]` is an array of regexes that will be used to match the current `uri`
+  - `allowedIPs?: string[]` is an array of IPs (/32) that will be used to match the current `clientIp`
+- Ability to override:
+  - `httpHeaders`
+  - `oauthScopes`
 
 ## Usage
 

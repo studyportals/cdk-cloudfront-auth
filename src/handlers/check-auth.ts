@@ -1,4 +1,4 @@
-import { CloudFrontRequestResult } from "aws-lambda"
+import { CloudFrontRequest, CloudFrontRequestResult } from "aws-lambda"
 import { createHash, randomBytes } from "crypto"
 import { safeBase64Stringify } from "./util/base64"
 import { createRequestHandler, redirectTo, staticPage } from "./util/cloudfront"
@@ -14,6 +14,10 @@ export const handler = createRequestHandler(async (config, event) => {
     request.querystring ? "?" + request.querystring : ""
   }`
 
+  console.log(JSON.stringify(request, null, 2))
+  if (isRequestWhitelisted(request, config)) {
+    return request
+  }
   const { idToken, refreshToken, nonce, nonceHmac } = extractAndParseCookies(
     request.headers,
     config.clientId,
@@ -180,4 +184,32 @@ function generatePkceVerifier(config: Config) {
   }
   config.logger.debug("Generated PKCE verifier:", verifier)
   return verifier
+}
+
+function isRequestWhitelisted(
+  request: CloudFrontRequest,
+  config: Config,
+): boolean {
+  const userAgent = request?.headers
+    ? request?.headers["user-agent"][0]?.value
+    : undefined
+
+  const uri = request.uri
+  const clientIp = request.clientIp
+
+  let allowedUserAgent = false
+
+  if (userAgent) {
+    allowedUserAgent = !!config.allowedCriterias?.allowedUserAgents?.some(
+      (allowedUserAgent) => new RegExp(allowedUserAgent).test(userAgent),
+    )
+  }
+  const allowedURI = !!config.allowedCriterias?.allowedURIs?.some(
+    (allowedUri) => new RegExp(allowedUri).test(uri),
+  )
+
+  const allowedIP = !!config.allowedCriterias?.allowedIPs?.some(
+    (allowedIP) => clientIp === allowedIP,
+  )
+  return allowedUserAgent || allowedURI || allowedIP
 }
