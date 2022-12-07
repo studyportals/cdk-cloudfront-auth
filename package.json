@@ -1,6 +1,6 @@
 {
   "name": "@studyportals/cdk-cloudfront-auth",
-  "version": "0.0.37-development",
+  "version": "0.1.0-beta1",
   "description": "CDK Constructs for adding authentication for a CloudFront Distribution",
   "repository": {
     "type": "git",
