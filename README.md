@@ -8,6 +8,7 @@ This is based on https://github.com/henrist/cdk-cloudfront-auth.
 New features: 
 - Cognito clients can be created in new accounts if passed a role that can be assumed in that account
 - Cognito domain can be automatically retrieved if it's not known
+- Auto-delete unusued Lambda@Edge versions
 - `mode` is now sent as an input
 - `allowedCriterias` can now be used to pass exceptions from the authorization layer
   - `allowedUserAgents?: string[]` is an array of regexes that will be used to match the current `user-agent`

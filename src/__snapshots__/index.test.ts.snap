@@ -1657,7 +1657,7 @@ exports[`A simple example 2`] = `
           ],
         },
         "Runtime": "nodejs16.x",
-        "Timeout": 10,
+        "Timeout": 90,
       },
       "Type": "AWS::Lambda::Function",
     },
