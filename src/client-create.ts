@@ -7,7 +7,6 @@ import { Construct } from "constructs"
 
 interface ClientCreateProps {
   oauthScopes: string[]
-  client: cognito.IUserPoolClient
   userPool: cognito.IUserPool
   callbackUrl: string
   identityProviders: string[]

@@ -4,6 +4,8 @@ import { ParameterResource } from "@henrist/cdk-cross-region-params"
 import * as path from "path"
 import { Construct } from "constructs"
 import { Duration, Stack } from "aws-cdk-lib"
+import { LockableTable } from "@studyportals/cdk-lambda-config"
+import { LambdaVersionsCleanup } from "./lambdas-cleanup"
 
 const isSnapshot = process.env.IS_SNAPSHOT === "true"
 
@@ -18,6 +20,8 @@ interface AuthLambdasProps {
    * to allow new versions to be created.
    */
   nonce?: string
+
+  concurrencySafe?: boolean
 }
 
 /**
@@ -32,6 +36,7 @@ export class AuthLambdas extends Construct {
   public readonly parseAuthFn: ParameterResource<lambda.IVersion>
   public readonly refreshAuthFn: ParameterResource<lambda.IVersion>
   public readonly signOutFn: ParameterResource<lambda.IVersion>
+  public readonly locksTableArn: string | undefined
 
   private readonly regions: string[]
   private readonly nonce: string | undefined
@@ -46,6 +51,13 @@ export class AuthLambdas extends Construct {
 
     if (region !== "us-east-1") {
       throw new Error("Region must be us-east-1 due to Lambda@edge")
+    }
+
+    if (!!props.concurrencySafe) {
+      this.locksTableArn = LockableTable.create(
+        this,
+        "UpdateCodeLocks",
+      ).tableArn
     }
 
     const role = new iam.Role(this, "ServiceRole", {
@@ -73,6 +85,21 @@ export class AuthLambdas extends Construct {
       role,
     )
     this.signOutFn = this.addFunction("SignOutFunction", "sign-out", role)
+  }
+
+  public enableAutoCleanup() {
+    const versions = [
+      this.checkAuthFn,
+      this.httpHeadersFn,
+      this.parseAuthFn,
+      this.refreshAuthFn,
+      this.signOutFn,
+    ].map((fn) => {
+      return fn.get(this, `read-${fn.node.id}`)
+    })
+    new LambdaVersionsCleanup(this, "CleanupFunction", {
+      lambdaVersions: versions,
+    })
   }
 
   private addFunction(id: string, assetName: string, role: iam.IRole) {

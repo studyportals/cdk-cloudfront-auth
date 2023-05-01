@@ -8,7 +8,7 @@ import {
 import * as cognito from "aws-cdk-lib/aws-cognito"
 import * as lambda from "aws-cdk-lib/aws-lambda"
 import { IVersion } from "aws-cdk-lib/aws-lambda"
-import { LambdaConfig } from "@henrist/cdk-lambda-config"
+import { LambdaConfig } from "@studyportals/cdk-lambda-config"
 import { RetrieveClientSecret } from "./client-secret"
 import { ClientUpdate } from "./client-update"
 import { GenerateSecret } from "./generate-secret"
@@ -198,6 +198,7 @@ export class CloudFrontAuth extends Construct {
         refreshToken: "Path=/; Secure; HttpOnly; SameSite=Lax",
         nonce: "Path=/; Secure; HttpOnly; SameSite=Lax",
       },
+      locksTable: props.authLambdas.locksTableArn,
     }
 
     if (props.mode === Mode.SPA) {
@@ -423,7 +424,6 @@ export class CloudFrontAuth extends Construct {
       })
     } else {
       return new ClientCreate(this, "cross-client", {
-        client: this.client,
         userPool: this.userPool,
         // signOutUrl: props.signOutUrl,
         // callbackUrl: props.callbackUrl,

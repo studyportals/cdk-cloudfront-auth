@@ -13,6 +13,7 @@ module.exports = {
     "http-headers/index": "./src/handlers/http-headers.ts",
     "parse-auth/index": "./src/handlers/parse-auth.ts",
     "refresh-auth/index": "./src/handlers/refresh-auth.ts",
+    "cleanup-lambdas/index": "./src/handlers/cleanup-lambdas.ts",
     "sign-out/index": "./src/handlers/sign-out.ts",
   },
   resolve: {

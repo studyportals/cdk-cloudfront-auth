@@ -21,6 +21,7 @@ export interface StoredConfig {
   logLevel: keyof typeof LogLevel
   requireGroupAnyOf?: string[] | null
   allowedCriterias?: AllowedCriterias
+  locksTable?: string
 }
 
 export interface AllowedCriterias {
