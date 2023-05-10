@@ -1,4 +1,4 @@
-import { AuthLambdas } from "@henrist/cdk-cloudfront-auth"
+import { AuthLambdas } from "@studyportals/cdk-cloudfront-auth"
 import * as cdk from "aws-cdk-lib"
 import { Construct } from "constructs"
 

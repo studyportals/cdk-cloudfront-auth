@@ -5,6 +5,7 @@ import { Bucket } from "aws-cdk-lib/aws-s3"
 import "jest-cdk-snapshot"
 import { AuthLambdas, CloudFrontAuth } from "."
 import { App, Stack } from "aws-cdk-lib"
+import { Mode } from "./cloudfront-auth"
 
 test("A simple example", () => {
   const app = new App()
@@ -31,6 +32,7 @@ test("A simple example", () => {
     cognitoAuthDomain: `my-domain.auth.eu-west-1.amazoncognito.com`,
     authLambdas, // AuthLambdas from above
     userPool, // Cognito User Pool
+    mode: Mode.STATIC_SITE, // SPA or STATIC_SITE
   })
 
   const bucket = new Bucket(stack2, "Bucket")

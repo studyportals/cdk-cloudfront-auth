@@ -6,6 +6,7 @@ import { Construct } from "constructs"
 export interface RetrieveClientSecretProps {
   client: cognito.IUserPoolClient
   userPool: cognito.IUserPool
+  userPoolAssumedRole?: iam.IRole
 }
 
 export class RetrieveClientSecret extends Construct {
@@ -13,9 +14,9 @@ export class RetrieveClientSecret extends Construct {
 
   constructor(scope: Construct, id: string, props: RetrieveClientSecretProps) {
     super(scope, id)
-
-    const clientSecret = new cr.AwsCustomResource(this, "Resource", {
+    const clientSecret = new cr.AwsCustomResource(this, "retrieve-secret", {
       onUpdate: {
+        assumedRoleArn: props.userPoolAssumedRole?.roleArn,
         service: "CognitoIdentityServiceProvider",
         action: "describeUserPoolClient",
         parameters: {
