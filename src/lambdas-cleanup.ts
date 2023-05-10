@@ -1,7 +1,7 @@
 import * as lambda from "aws-cdk-lib/aws-lambda"
 import * as path from "path"
 import { Construct } from "constructs"
-import { Stack } from "aws-cdk-lib"
+import { Duration, Stack } from "aws-cdk-lib"
 import { PolicyStatement } from "aws-cdk-lib/aws-iam"
 import { Rule, Schedule } from "aws-cdk-lib/aws-events"
 import * as eventsTargets from "aws-cdk-lib/aws-events-targets"
@@ -23,6 +23,7 @@ export class LambdaVersionsCleanup extends Construct {
         path.join(__dirname, "../dist/cleanup-lambdas"),
       ),
       handler: "index.handler",
+      timeout: Duration.seconds(60),
       runtime: lambda.Runtime.NODEJS_16_X,
       environment: {
         lambdaArns: JSON.stringify(
