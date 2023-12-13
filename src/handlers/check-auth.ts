@@ -194,15 +194,27 @@ function isRequestWhitelisted(
     ? request?.headers["user-agent"][0]?.value
     : undefined
 
+  const authorizationHeader = request?.headers
+    ? request?.headers["authorization"][0]?.value
+    : undefined
+
   const uri = request.uri
   const clientIp = request.clientIp
 
   let allowedUserAgent = false
+  let allowedAuthorizationHeader = false
 
   if (userAgent) {
     allowedUserAgent = !!config.allowedCriterias?.allowedUserAgents?.some(
       (allowedUserAgent) => new RegExp(allowedUserAgent).test(userAgent),
     )
+  }
+
+  if (authorizationHeader) {
+    allowedAuthorizationHeader =
+      !!config.allowedCriterias?.allowedAuthorization?.some(
+        (allowedAuthorization) => authorizationHeader === allowedAuthorization,
+      )
   }
   const allowedURI = !!config.allowedCriterias?.allowedURIs?.some(
     (allowedUri) => new RegExp(allowedUri).test(uri),
@@ -211,5 +223,7 @@ function isRequestWhitelisted(
   const allowedIP = !!config.allowedCriterias?.allowedIPs?.some(
     (allowedIP) => clientIp === allowedIP,
   )
-  return allowedUserAgent || allowedURI || allowedIP
+  return (
+    allowedAuthorizationHeader || allowedUserAgent || allowedURI || allowedIP
+  )
 }

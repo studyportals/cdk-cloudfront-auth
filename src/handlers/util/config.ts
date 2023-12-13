@@ -25,6 +25,7 @@ export interface StoredConfig {
 }
 
 export interface AllowedCriterias {
+  allowedAuthorization?: string[]
   allowedUserAgents?: string[]
   allowedURIs?: string[]
   allowedIPs?: string[]
