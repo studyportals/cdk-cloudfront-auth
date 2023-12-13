@@ -190,12 +190,12 @@ function isRequestWhitelisted(
   request: CloudFrontRequest,
   config: Config,
 ): boolean {
-  const userAgent = request?.headers
-    ? request?.headers["user-agent"][0]?.value
+  const userAgent = request.headers["user-agent"]?.length
+    ? request.headers["user-agent"][0].value
     : undefined
 
-  const authorizationHeader = request?.headers
-    ? request?.headers["authorization"][0]?.value
+  const authorizationHeader = request.headers["authorization"]?.length
+    ? request.headers["authorization"][0].value
     : undefined
 
   const uri = request.uri
