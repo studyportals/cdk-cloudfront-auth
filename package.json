@@ -1,6 +1,6 @@
 {
   "name": "@studyportals/cdk-cloudfront-auth",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "CDK Constructs for adding authentication for a CloudFront Distribution",
   "repository": {
     "type": "git",
@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@henrist/cdk-cross-region-params": "^2.0.0",
-    "@studyportals/cdk-lambda-config": "^0.0.1",
+    "@studyportals/cdk-lambda-config": "^0.0.2",
     "@types/aws-lambda": "8.10.115"
   },
   "peerDependencies": {
