@@ -24,7 +24,7 @@ export class LambdaVersionsCleanup extends Construct {
       ),
       handler: "index.handler",
       timeout: Duration.seconds(60),
-      runtime: lambda.Runtime.NODEJS_16_X,
+      runtime: lambda.Runtime.NODEJS_20_X,
       environment: {
         lambdaArns: JSON.stringify(
           versions.map((v) => this.constructFunctionArn(v)),

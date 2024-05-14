@@ -1,7 +1,11 @@
+import {
+  LambdaClient,
+  ListVersionsByFunctionCommand,
+  DeleteFunctionCommand,
+} from "@aws-sdk/client-lambda"
 import { Handler } from "aws-lambda"
-import * as AWS from "aws-sdk"
 
-const lambda = new AWS.Lambda()
+const lambdaClient = new LambdaClient({})
 
 async function deleteVersions(functionArn: string, versionsToKeep: string[]) {
   const match = functionArn.match(/arn:aws:lambda:[^:]+:\d+:function:([^:]+)/)
@@ -11,23 +15,27 @@ async function deleteVersions(functionArn: string, versionsToKeep: string[]) {
   }
 
   const funcName = match[1]
-  const listVersionsParams = { FunctionName: functionArn }
-  const { Versions } = await lambda
-    .listVersionsByFunction(listVersionsParams)
-    .promise()
+  const listVersionsCommand = new ListVersionsByFunctionCommand({
+    FunctionName: functionArn,
+  })
+  const response = await lambdaClient.send(listVersionsCommand)
 
-  if (!Versions) return
+  if (!response.Versions) return
 
-  for (const version of Versions) {
+  for (const version of response.Versions) {
     if (version.Version && versionsToKeep.includes(version.Version)) continue
 
     const ageInMilliseconds =
       Date.now() - Date.parse(version.LastModified ?? Date.now().toString())
     if (ageInMilliseconds < 86400000) continue
 
-    const deleteParams = { FunctionName: funcName, Qualifier: version.Version }
+    const deleteFunctionCommand = new DeleteFunctionCommand({
+      FunctionName: funcName,
+      Qualifier: version.Version,
+    })
+
     try {
-      await lambda.deleteFunction(deleteParams).promise()
+      await lambdaClient.send(deleteFunctionCommand)
       console.log("Deleted version:", version.Version, "of function:", funcName)
     } catch (error) {
       console.error(
