@@ -181,6 +181,7 @@ export class CloudFrontAuth extends Construct {
 
     const cognitoAuthDomain =
       props.userPoolDomain ??
+      props.cognitoAuthDomain ??
       new DescribeUserPool(this, "DescribeUserPool", {
         userPool: this.userPool,
         userPoolAssumedRole: this.userPoolAssumedRole,
