@@ -7,8 +7,8 @@ This is based on https://github.com/henrist/cdk-cloudfront-auth.
 
 New features:
 
-- Cognito clients can be created in new accounts if passed a role that can be assumed in that account
-- Support for Cognito user pool custom domain (if provided)
+- Cognito clients can be created in new accounts if passed a role (`userPoolAssumedRole`) that can be assumed in that account
+- `userPoolDomain` Support for Cognito user pool custom domain (if provided)
 - Automatic retrieval of the Cognito user pool domain if not specified. If a custom domain is provided, it takes precedence
 - Auto-delete unusued Lambda@Edge versions
 - `mode` is now sent as an input
@@ -44,7 +44,9 @@ of your choice:
 const auth = new CloudFrontAuth(this, "Auth", {
   cognitoAuthDomain: `${domain.domainName}.auth.${region}.amazoncognito.com`,
   authLambdas, // AuthLambdas from above
-  userPool, // Cognito User Pool
+  userPool, // Cognito User Pool (OPTIONAL - if userPoolDomain is defined)
+  userPoolAssumedRole, // IAM Role to access the Cognito User Pool (OPTIONAL)
+  userPoolDomain, // Custom User Pool Domain (OPTIONAL - if userPool is defined)
 })
 const distribution = new cloudfront.Distribution(this, "Distribution", {
   defaultBehavior: auth.createProtectedBehavior(origin),
