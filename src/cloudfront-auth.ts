@@ -17,8 +17,8 @@ import { AuthLambdas } from "./lambdas"
 import { Construct } from "constructs"
 import { IRole } from "aws-cdk-lib/aws-iam"
 import { ClientCreate } from "./client-create"
-import { IUserPoolClient } from "aws-cdk-lib/aws-cognito"
 import { DescribeUserPool } from "./describe-user-pool"
+import { DescribeUserPoolDomain } from "./describe-user-pool-domain"
 
 export interface CloudFrontAuthProps {
   /**
@@ -30,7 +30,11 @@ export interface CloudFrontAuthProps {
    * @default - a new client will be generated
    */
   client?: cognito.UserPoolClient
-  userPool: cognito.IUserPool
+  userPool?: cognito.IUserPool
+  /**
+   * Custom domain for the Cognito User Pool.
+   */
+  userPoolDomain?: string
   /**
    * The domain that is used for Cognito Auth.
    *
@@ -140,7 +144,28 @@ export class CloudFrontAuth extends Construct {
       "aws.cognito.signin.user.admin",
     ]
 
-    this.userPool = props.userPool
+    if (props.userPoolDomain) {
+      const userPoolId = new DescribeUserPoolDomain(
+        this,
+        "DescribeUserPoolDomain",
+        {
+          userPoolCustomDomain: props.userPoolDomain,
+          userPoolAssumedRole: this.userPoolAssumedRole,
+        },
+      ).userPoolId
+
+      this.userPool = cognito.UserPool.fromUserPoolId(
+        this,
+        "UserPool",
+        userPoolId,
+      )
+    } else if (props.userPool) {
+      this.userPool = props.userPool
+    } else {
+      throw new Error(
+        "You must provide either a userPool or userPoolDomain to CloudFrontAuth",
+      )
+    }
 
     this.clientCreated = !props.client
     this.client = props.client ?? this.createClient()
@@ -148,17 +173,14 @@ export class CloudFrontAuth extends Construct {
     const nonceSigningSecret = new GenerateSecret(this, "NonceSigningSecret")
       .value
 
-    const { clientSecretValue } = new RetrieveClientSecret(
-      this,
-      "ClientSecret",
-      {
-        client: this.client,
-        userPool: this.userPool,
-        userPoolAssumedRole: this.userPoolAssumedRole,
-      },
-    )
+    const clientSecretValue = new RetrieveClientSecret(this, "ClientSecret", {
+      client: this.client,
+      userPool: this.userPool,
+      userPoolAssumedRole: this.userPoolAssumedRole,
+    }).clientSecretValue
 
     const cognitoAuthDomain =
+      props.userPoolDomain ??
       props.cognitoAuthDomain ??
       new DescribeUserPool(this, "DescribeUserPool", {
         userPool: this.userPool,
@@ -405,7 +427,7 @@ export class CloudFrontAuth extends Construct {
    *  to not be correctly configured.
    *  How can we avoid this scenario?
    */
-  private createClient(): IUserPoolClient {
+  private createClient(): cognito.IUserPoolClient {
     if (!this.userPoolAssumedRole) {
       return this.userPool.addClient("UserPoolClient", {
         // Note: The following must be kept in sync with the API
