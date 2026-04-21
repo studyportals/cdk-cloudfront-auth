@@ -25,7 +25,7 @@ function extractCookiesFromHeaders(headers: CloudFrontHeaders): Cookies {
   const cookies = headers["cookie"].reduce<Cookies>(
     (reduced, header) => ({
       ...reduced,
-      ...(parse(header.value) as Cookies),
+      ...parse(header.value),
     }),
     {},
   )

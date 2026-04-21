@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      aws-cdk:
+        patterns:
+          - "aws-cdk-lib"
+          - "constructs"
+          - "@aws-cdk/*"
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
+      typescript-tooling:
+        patterns:
+          - "typescript"
+          - "ts-jest"
+          - "ts-loader"
+          - "ts-node"
+          - "typescript-eslint"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+      jest:
+        patterns:
+          - "jest"
+          - "jest-*"
+          - "@types/jest"
+      commitlint:
+        patterns:
+          - "@commitlint/*"

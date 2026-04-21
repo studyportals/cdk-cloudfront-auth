@@ -77,7 +77,7 @@ export const handler = createRequestHandler(async (config, event) => {
       { headers },
       config.logger,
     )
-  } catch (err) {
+  } catch (_err) {
     return redirectTo(redirectedFromUri, {
       cookies: generateCookies({
         event: "refreshFailed",
