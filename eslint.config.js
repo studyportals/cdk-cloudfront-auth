@@ -5,7 +5,15 @@ const prettierPlugin = require("eslint-plugin-prettier")
 
 module.exports = tseslint.config(
   {
-    ignores: ["dist/", "lib/", "example/", "cdk.out/", "webpack.config.js", "eslint.config.js", "jest.config.js"],
+    ignores: [
+      "dist/",
+      "lib/",
+      "example/",
+      "cdk.out/",
+      "webpack.config.js",
+      "eslint.config.js",
+      "jest.config.js",
+    ],
   },
   {
     files: ["src/**/*.ts"],
@@ -19,7 +27,14 @@ module.exports = tseslint.config(
     rules: {
       "prettier/prettier": "error",
       "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
   prettierConfig,

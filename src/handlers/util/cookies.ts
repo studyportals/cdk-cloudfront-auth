@@ -38,7 +38,6 @@ function withCookieDomain(
   cookieSettings: string,
 ) {
   if (cookieSettings.toLowerCase().indexOf("domain") === -1) {
-    // Add leading dot for compatibility with Amplify (or js-cookie really).
     return `${cookieSettings}; Domain=.${distributionDomainName}`
   }
   return cookieSettings
@@ -52,7 +51,6 @@ export function extractAndParseCookies(
   idToken?: string
   accessToken?: string
   refreshToken?: string
-  scopes?: string
   nonce?: string
   nonceHmac?: string
   pkce?: string
@@ -70,7 +68,6 @@ export function extractAndParseCookies(
     idToken: cookies[`${keyPrefix}.${tokenUserName ?? ""}.idToken`],
     accessToken: cookies[`${keyPrefix}.${tokenUserName ?? ""}.accessToken`],
     refreshToken: cookies[`${keyPrefix}.${tokenUserName ?? ""}.refreshToken`],
-    scopes: cookies[`${keyPrefix}.${tokenUserName ?? ""}.tokenScopesString`],
     nonce: cookies["spa-auth-edge-nonce"],
     nonceHmac: cookies["spa-auth-edge-nonce-hmac"],
     pkce: cookies["spa-auth-edge-pkce"],
@@ -89,31 +86,14 @@ export function generateCookies(param: {
     refreshToken: string
   }
 }): string[] {
-  // Set cookies with the exact names and values Amplify uses
-  // for seamless interoperability with Amplify.
-  const decodedIdToken = decodeIdToken(param.tokens.idToken)
-  const tokenUserName = decodedIdToken["cognito:username"] as string
+  const tokenUserName = decodeIdToken(param.tokens.idToken)[
+    "cognito:username"
+  ] as string
   const keyPrefix = `CognitoIdentityServiceProvider.${param.clientId}`
   const idTokenKey = `${keyPrefix}.${tokenUserName}.idToken`
   const accessTokenKey = `${keyPrefix}.${tokenUserName}.accessToken`
   const refreshTokenKey = `${keyPrefix}.${tokenUserName}.refreshToken`
   const lastUserKey = `${keyPrefix}.LastAuthUser`
-  const scopeKey = `${keyPrefix}.${tokenUserName}.tokenScopesString`
-  const scopesString = param.oauthScopes.join(" ")
-  const userDataKey = `${keyPrefix}.${tokenUserName}.userData`
-  const userData = JSON.stringify({
-    UserAttributes: [
-      {
-        Name: "sub",
-        Value: decodedIdToken["sub"],
-      },
-      {
-        Name: "email",
-        Value: decodedIdToken["email"],
-      },
-    ],
-    Username: tokenUserName,
-  })
 
   // Construct object with the cookies
   const cookies = {
@@ -132,18 +112,6 @@ export function generateCookies(param: {
     [lastUserKey]: `${tokenUserName}; ${withCookieDomain(
       param.domainName,
       param.cookieSettings.idToken,
-    )}`,
-    [scopeKey]: `${scopesString}; ${withCookieDomain(
-      param.domainName,
-      param.cookieSettings.accessToken,
-    )}`,
-    [userDataKey]: `${encodeURIComponent(userData)}; ${withCookieDomain(
-      param.domainName,
-      param.cookieSettings.idToken,
-    )}`,
-    "amplify-signin-with-hostedUI": `true; ${withCookieDomain(
-      param.domainName,
-      param.cookieSettings.accessToken,
     )}`,
   }
 

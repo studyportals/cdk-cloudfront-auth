@@ -805,14 +805,14 @@ exports[`A simple example 2`] = `
               "","CallbackURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
               "/auth/callback"],"LogoutURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
@@ -850,14 +850,14 @@ exports[`A simple example 2`] = `
               "","CallbackURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
               "/auth/callback"],"LogoutURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
@@ -1051,6 +1051,163 @@ exports[`A simple example 2`] = `
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceB1AC39B6": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceCustomResourcePolicyF5CA0372",
+      ],
+      "Properties": {
+        "Create": {
+          "Fn::Join": [
+            "",
+            [
+              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","parameters":{"UserPoolId":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "","LambdaConfig":{"PreTokenGenerationConfig":{"LambdaArn":"",
+              {
+                "Fn::GetAtt": [
+                  "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6",
+                  "Arn",
+                ],
+              },
+              "","LambdaVersion":"V2_0"}}},"physicalResourceId":{"id":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "-pre-token-generation"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": {
+          "Fn::Join": [
+            "",
+            [
+              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","parameters":{"UserPoolId":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "","LambdaConfig":{"PreTokenGenerationConfig":{"LambdaArn":"",
+              {
+                "Fn::GetAtt": [
+                  "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6",
+                  "Arn",
+                ],
+              },
+              "","LambdaVersion":"V2_0"}}},"physicalResourceId":{"id":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "-pre-token-generation"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceCustomResourcePolicyF5CA0372": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "cognito-idp:UpdateUserPool",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "UserPool6BA7E5F2",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceCustomResourcePolicyF5CA0372",
+        "Roles": [
+          {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6": {
+      "DependsOn": [
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionServiceRole90A84CBF",
+      ],
+      "Properties": {
+        "Code": Any<Object>,
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionServiceRole90A84CBF",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+        "Timeout": 5,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionCognitoInvokePermission7252666A": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6",
+            "Arn",
+          ],
+        },
+        "Principal": "cognito-idp.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "UserPool6BA7E5F2",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionServiceRole90A84CBF": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "AuthRefreshAuthFnEA5CBBAE": {
       "DeletionPolicy": "Delete",
       "Properties": {
@@ -1186,23 +1343,70 @@ exports[`A simple example 2`] = `
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
-    "CloudFrontDistributionCFDistribution599ADCC4": {
+    "BucketPolicyE9A3008A": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "Bucket83908E77",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:GetObject",
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":cloudfront::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":distribution/",
+                        {
+                          "Ref": "CloudFrontDistributionBA64CE3A",
+                        },
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "Bucket83908E77",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "CloudFrontDistributionBA64CE3A": {
       "Properties": {
         "DistributionConfig": {
           "CacheBehaviors": [
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1215,22 +1419,12 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/callback",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1243,22 +1437,12 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/refresh",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1271,26 +1455,13 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/sign-out",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
           ],
           "DefaultCacheBehavior": {
-            "AllowedMethods": [
-              "GET",
-              "HEAD",
-            ],
-            "CachedMethods": [
-              "GET",
-              "HEAD",
-            ],
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
             "Compress": true,
-            "ForwardedValues": {
-              "Cookies": {
-                "Forward": "none",
-              },
-              "QueryString": false,
-            },
             "LambdaFunctionAssociations": [
               {
                 "EventType": "viewer-request",
@@ -1311,34 +1482,46 @@ exports[`A simple example 2`] = `
                 },
               },
             ],
-            "TargetOriginId": "origin1",
+            "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
             "ViewerProtocolPolicy": "redirect-to-https",
           },
-          "DefaultRootObject": "index.html",
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
           "Origins": [
             {
-              "ConnectionAttempts": 3,
-              "ConnectionTimeout": 10,
               "DomainName": {
                 "Fn::GetAtt": [
                   "Bucket83908E77",
                   "RegionalDomainName",
                 ],
               },
-              "Id": "origin1",
-              "S3OriginConfig": {},
+              "Id": "Stack2CloudFrontDistributionOrigin1B1B60C21",
+              "OriginAccessControlId": {
+                "Fn::GetAtt": [
+                  "CloudFrontDistributionOrigin1S3OriginAccessControlD0BFFDCA",
+                  "Id",
+                ],
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+              },
             },
           ],
-          "PriceClass": "PriceClass_100",
-          "ViewerCertificate": {
-            "CloudFrontDefaultCertificate": true,
-          },
         },
       },
       "Type": "AWS::CloudFront::Distribution",
+    },
+    "CloudFrontDistributionOrigin1S3OriginAccessControlD0BFFDCA": {
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": "Stack2CloudFrontDistributionOrigin1S3OriginAccessControl32B559A7",
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4",
+        },
+      },
+      "Type": "AWS::CloudFront::OriginAccessControl",
     },
     "UserPool6BA7E5F2": {
       "DeletionPolicy": "Retain",
