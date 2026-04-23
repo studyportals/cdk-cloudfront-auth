@@ -1,4 +1,5 @@
-import { createRemoteJWKSet, jwtVerify } from "jose"
+import { decode, verify } from "jsonwebtoken"
+import jwksClient, { RsaSigningKey, SigningKey } from "jwks-rsa"
 
 export interface IdTokenPayload {
   sub: string
@@ -14,9 +15,28 @@ export interface IdTokenPayload {
   email?: string
 }
 
-// JWKS resolver is cached at module scope so it can be reused across
-// Lambda invocations (jose handles internal key caching).
-let jwks: ReturnType<typeof createRemoteJWKSet> | undefined
+// jwks client is cached at this scope so it can be reused
+// across Lambda invocations.
+let jwksRsa: jwksClient.JwksClient
+
+function isRsaSigningKey(key: SigningKey): key is RsaSigningKey {
+  return "rsaPublicKey" in key
+}
+
+/**
+ * Retrieves the public key that corresponds to the private key with
+ * which the token was signed.
+ */
+async function getSigningKey(
+  jwksUri: string,
+  kid: string,
+): Promise<string | Error> {
+  if (!jwksRsa) {
+    jwksRsa = jwksClient({ cache: true, rateLimit: true, jwksUri })
+  }
+  const jwk = await jwksRsa.getSigningKey(kid)
+  return isRsaSigningKey(jwk) ? jwk.rsaPublicKey : jwk.publicKey
+}
 
 export async function validate(
   jwtToken: string,
@@ -24,17 +44,34 @@ export async function validate(
   issuer: string,
   audience: string,
 ): Promise<{ validationError: Error } | undefined> {
-  if (!jwks) {
-    jwks = createRemoteJWKSet(new URL(jwksUri))
-  }
-  try {
-    await jwtVerify(jwtToken, jwks, { issuer, audience, algorithms: ["RS256"] })
-    return undefined
-  } catch (err) {
+  const decodedToken = decode(jwtToken, { complete: true })
+  if (!decodedToken || typeof decodedToken === "string") {
     return {
-      validationError: err instanceof Error ? err : new Error(String(err)),
+      validationError: new Error("Cannot parse JWT token"),
     }
   }
+
+  // The JWT contains a "kid" claim, key id, that tells which key
+  // was used to sign the token.
+  const kid = decodedToken["header"]["kid"] as string
+  const jwk = await getSigningKey(jwksUri, kid)
+  if (jwk instanceof Error) {
+    return { validationError: jwk }
+  }
+
+  // Verify the JWT.
+  // This either rejects (JWT not valid), or resolves (JWT valid).
+  const verificationOptions = {
+    audience,
+    issuer,
+    ignoreExpiration: false,
+  }
+
+  return new Promise((resolve) =>
+    verify(jwtToken, jwk, verificationOptions, (err) =>
+      err ? resolve({ validationError: err }) : resolve(undefined),
+    ),
+  )
 }
 
 export function decodeIdToken(jwt: string): IdTokenPayload {
