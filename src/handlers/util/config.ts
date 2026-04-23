@@ -48,11 +48,15 @@ export function getConfig(): Config {
   const userPoolRegion = /^(\S+?)_\S+$/.exec(config.userPoolId)![1]
   const tokenIssuer = `https://cognito-idp.${userPoolRegion}.amazonaws.com/${config.userPoolId}`
   const tokenJwksUri = `${tokenIssuer}/.well-known/jwks.json`
+  const nonceMaxAgeString = parse(config.cookieSettings.nonce.toLowerCase())[
+    "max-age"
+  ]
+  const nonceMaxAge = Number.isFinite(nonceMaxAgeString)
+    ? Number(nonceMaxAgeString)
+    : 60 * 60 * 24
 
   return {
-    nonceMaxAge:
-      Number(parse(config.cookieSettings.nonce.toLowerCase())["max-age"]) ||
-      60 * 60 * 24,
+    nonceMaxAge,
     ...config,
     tokenIssuer,
     tokenJwksUri,

@@ -2,7 +2,7 @@ import * as cognito from "aws-cdk-lib/aws-cognito"
 import * as iam from "aws-cdk-lib/aws-iam"
 import * as lambda from "aws-cdk-lib/aws-lambda"
 import * as cr from "aws-cdk-lib/custom-resources"
-import { Duration, Stack } from "aws-cdk-lib"
+import { Duration, RemovalPolicy, Stack } from "aws-cdk-lib"
 import { Construct } from "constructs"
 import * as path from "path"
 
@@ -63,13 +63,20 @@ export class PreTokenGenerationTrigger extends Construct {
       )
     }
 
-    const sdkCall: cr.AwsSdkCall = {
+    const sdkCallBase = {
       service: "CognitoIdentityServiceProvider",
       action: "updateUserPool",
       ...(userPoolAssumedRole
         ? { assumedRoleArn: userPoolAssumedRole.roleArn }
         : {}),
       region,
+      physicalResourceId: cr.PhysicalResourceId.of(
+        `${userPool.userPoolId}-pre-token-generation`,
+      ),
+    }
+
+    const sdkCall: cr.AwsSdkCall = {
+      ...sdkCallBase,
       parameters: {
         UserPoolId: userPool.userPoolId,
         LambdaConfig: {
@@ -79,15 +86,36 @@ export class PreTokenGenerationTrigger extends Construct {
           },
         },
       },
-      physicalResourceId: cr.PhysicalResourceId.of(
-        `${userPool.userPoolId}-pre-token-generation`,
-      ),
     }
 
-    new cr.AwsCustomResource(this, "PreTokenGenerationCustomResource", {
-      onCreate: sdkCall,
-      onUpdate: sdkCall,
-      policy: cr.AwsCustomResourcePolicy.fromStatements(iamPolicyStatements),
-    })
+    // On delete, set PreTokenGenerationConfig to null so only this trigger is
+    // removed. The AWS API treats null on an individual LambdaConfig field as
+    // "deactivate this trigger", leaving all other triggers untouched.
+    const deleteCall: cr.AwsSdkCall = {
+      ...sdkCallBase,
+      parameters: {
+        UserPoolId: userPool.userPoolId,
+        LambdaConfig: {
+          PreTokenGenerationConfig: null,
+        },
+      },
+    }
+
+    const customResource = new cr.AwsCustomResource(
+      this,
+      "PreTokenGenerationCustomResource",
+      {
+        onCreate: sdkCall,
+        onUpdate: sdkCall,
+        onDelete: deleteCall,
+        policy: cr.AwsCustomResourcePolicy.fromStatements(iamPolicyStatements),
+        removalPolicy: RemovalPolicy.DESTROY,
+      },
+    )
+
+    // Ensure CloudFormation deletes the custom resource (running onDelete) before
+    // the Lambda, so the user pool is cleared while the stack teardown is still
+    // in progress and the rest of the stack resources still exist.
+    customResource.node.addDependency(preTokenGenerationLambda)
   }
 }

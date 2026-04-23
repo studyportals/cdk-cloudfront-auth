@@ -1055,13 +1055,20 @@ exports[`A simple example 2`] = `
       "DeletionPolicy": "Delete",
       "DependsOn": [
         "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceCustomResourcePolicyF5CA0372",
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionCognitoInvokePermission7252666A",
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6",
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionServiceRole90A84CBF",
       ],
       "Properties": {
         "Create": {
           "Fn::Join": [
             "",
             [
-              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","parameters":{"UserPoolId":"",
+              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","physicalResourceId":{"id":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "-pre-token-generation"},"parameters":{"UserPoolId":"",
               {
                 "Ref": "UserPool6BA7E5F2",
               },
@@ -1072,11 +1079,23 @@ exports[`A simple example 2`] = `
                   "Arn",
                 ],
               },
-              "","LambdaVersion":"V2_0"}}},"physicalResourceId":{"id":"",
+              "","LambdaVersion":"V2_0"}}}}",
+            ],
+          ],
+        },
+        "Delete": {
+          "Fn::Join": [
+            "",
+            [
+              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","physicalResourceId":{"id":"",
               {
                 "Ref": "UserPool6BA7E5F2",
               },
-              "-pre-token-generation"}}",
+              "-pre-token-generation"},"parameters":{"UserPoolId":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "","LambdaConfig":{"PreTokenGenerationConfig":null}}}",
             ],
           ],
         },
@@ -1091,7 +1110,11 @@ exports[`A simple example 2`] = `
           "Fn::Join": [
             "",
             [
-              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","parameters":{"UserPoolId":"",
+              "{"service":"CognitoIdentityServiceProvider","action":"updateUserPool","region":"eu-west-1","physicalResourceId":{"id":"",
+              {
+                "Ref": "UserPool6BA7E5F2",
+              },
+              "-pre-token-generation"},"parameters":{"UserPoolId":"",
               {
                 "Ref": "UserPool6BA7E5F2",
               },
@@ -1102,11 +1125,7 @@ exports[`A simple example 2`] = `
                   "Arn",
                 ],
               },
-              "","LambdaVersion":"V2_0"}}},"physicalResourceId":{"id":"",
-              {
-                "Ref": "UserPool6BA7E5F2",
-              },
-              "-pre-token-generation"}}",
+              "","LambdaVersion":"V2_0"}}}}",
             ],
           ],
         },
@@ -1115,6 +1134,11 @@ exports[`A simple example 2`] = `
       "UpdateReplacePolicy": "Delete",
     },
     "AuthPreTokenGenerationTriggerPreTokenGenerationCustomResourceCustomResourcePolicyF5CA0372": {
+      "DependsOn": [
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionCognitoInvokePermission7252666A",
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunction82AEB1D6",
+        "AuthPreTokenGenerationTriggerPreTokenGenerationFunctionServiceRole90A84CBF",
+      ],
       "Properties": {
         "PolicyDocument": {
           "Statement": [
