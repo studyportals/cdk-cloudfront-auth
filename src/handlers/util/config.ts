@@ -51,7 +51,7 @@ export function getConfig(): Config {
   const nonceMaxAgeString = parse(config.cookieSettings.nonce.toLowerCase())[
     "max-age"
   ]
-  const nonceMaxAge = Number.isFinite(nonceMaxAgeString)
+  const nonceMaxAge = Number.isFinite(Number(nonceMaxAgeString))
     ? Number(nonceMaxAgeString)
     : 60 * 60 * 24
 
