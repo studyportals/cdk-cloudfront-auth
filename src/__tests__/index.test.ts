@@ -4,9 +4,9 @@ import { UserPool } from "aws-cdk-lib/aws-cognito"
 import { CfnVersion } from "aws-cdk-lib/aws-lambda"
 import { Bucket } from "aws-cdk-lib/aws-s3"
 import "jest-cdk-snapshot"
-import { AuthLambdas, CloudFrontAuth } from "."
+import { AuthLambdas, CloudFrontAuth } from ".."
 import { App, Stack } from "aws-cdk-lib"
-import { Mode } from "./cloudfront-auth"
+import { Mode } from "../cloudfront-auth"
 
 test("A simple example", () => {
   const app = new App()
