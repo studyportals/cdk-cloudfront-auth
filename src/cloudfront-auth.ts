@@ -19,7 +19,6 @@ import { IRole } from "aws-cdk-lib/aws-iam"
 import { ClientCreate } from "./client-create"
 import { DescribeUserPool } from "./describe-user-pool"
 import { DescribeUserPoolDomain } from "./describe-user-pool-domain"
-import { PreTokenGenerationTrigger } from "./pre-token-generation-trigger"
 
 export interface CloudFrontAuthProps {
   /**
@@ -167,11 +166,6 @@ export class CloudFrontAuth extends Construct {
         "You must provide either a userPool or userPoolDomain to CloudFrontAuth",
       )
     }
-
-    new PreTokenGenerationTrigger(this, "PreTokenGenerationTrigger", {
-      userPool: this.userPool,
-      userPoolAssumedRole: this.userPoolAssumedRole,
-    })
 
     this.clientCreated = !props.client
     this.client = props.client ?? this.createClient()
