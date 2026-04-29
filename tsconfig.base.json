@@ -4,11 +4,13 @@
     "esModuleInterop": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "lib": ["es2018", "es2019"],
+    "lib": ["ES2022"],
+    "rootDir": "./src",
+    "types": ["node", "jest"],
     "module": "commonjs",
     "outDir": "./lib",
     "strict": true,
     "strictPropertyInitialization": false,
-    "target": "ES2018"
+    "target": "ES2022"
   }
 }

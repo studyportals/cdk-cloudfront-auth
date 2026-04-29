@@ -1,4 +1,8 @@
-import { AuthLambdas, CloudFrontAuth } from "@studyportals/cdk-cloudfront-auth"
+import {
+  AuthLambdas,
+  CloudFrontAuth,
+  Mode,
+} from "@studyportals/cdk-cloudfront-auth"
 import * as cdk from "aws-cdk-lib"
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront"
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins"
@@ -43,9 +47,10 @@ export class MainStack extends cdk.Stack {
       authLambdas: props.authLambdas,
       userPool,
       requireGroupAnyOf: ["test"],
+      mode: Mode.STATIC_SITE,
     })
 
-    const origin = new origins.S3Origin(bucket)
+    const origin = origins.S3BucketOrigin.withOriginAccessControl(bucket)
 
     const distribution = new cloudfront.Distribution(this, "Distribution", {
       defaultBehavior: auth.createProtectedBehavior(origin),

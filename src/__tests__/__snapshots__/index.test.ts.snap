@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`A simple example 1`] = `
 {
@@ -16,7 +16,7 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -65,12 +65,15 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Timeout": 5,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6259b63dcbbac821d4cb34a79cc8e3f8d4": {
+    "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6275fb447891cea0a00a2c26c8b446b559": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdasCheckAuthFunction6B3C9473",
@@ -90,13 +93,13 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6259b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6275fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"}}",
             ],
           ],
         },
-        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"},"logApiResponseData":true}",
+        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"}}",
         "InstallLatestAwsSdk": false,
         "ServiceToken": {
           "Fn::GetAtt": [
@@ -110,9 +113,9 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6259b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasCheckAuthFunctionCurrentVersionF10C4D6275fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-CheckAuthFunction-function-arn"}}",
             ],
           ],
         },
@@ -159,12 +162,15 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Timeout": 5,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E59b63dcbbac821d4cb34a79cc8e3f8d4": {
+    "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E75fb447891cea0a00a2c26c8b446b559": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdasHttpHeadersFunctionC7A2BAB9",
@@ -184,13 +190,13 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E59b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E75fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"}}",
             ],
           ],
         },
-        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"},"logApiResponseData":true}",
+        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"}}",
         "InstallLatestAwsSdk": false,
         "ServiceToken": {
           "Fn::GetAtt": [
@@ -204,9 +210,9 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E59b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasHttpHeadersFunctionCurrentVersion8B8CDE2E75fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-HttpHeadersFunction-function-arn"}}",
             ],
           ],
         },
@@ -253,12 +259,15 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Timeout": 5,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "AuthLambdasParseAuthFunctionCurrentVersionA32A599159b63dcbbac821d4cb34a79cc8e3f8d4": {
+    "AuthLambdasParseAuthFunctionCurrentVersionA32A599175fb447891cea0a00a2c26c8b446b559": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdasParseAuthFunctionC04A121B",
@@ -278,13 +287,13 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasParseAuthFunctionCurrentVersionA32A599159b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasParseAuthFunctionCurrentVersionA32A599175fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"}}",
             ],
           ],
         },
-        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"},"logApiResponseData":true}",
+        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"}}",
         "InstallLatestAwsSdk": false,
         "ServiceToken": {
           "Fn::GetAtt": [
@@ -298,9 +307,9 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasParseAuthFunctionCurrentVersionA32A599159b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasParseAuthFunctionCurrentVersionA32A599175fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-ParseAuthFunction-function-arn"}}",
             ],
           ],
         },
@@ -347,12 +356,15 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Timeout": 5,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "AuthLambdasRefreshAuthFunctionCurrentVersion632285F659b63dcbbac821d4cb34a79cc8e3f8d4": {
+    "AuthLambdasRefreshAuthFunctionCurrentVersion632285F675fb447891cea0a00a2c26c8b446b559": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdasRefreshAuthFunction4B0B3BD6",
@@ -372,13 +384,13 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasRefreshAuthFunctionCurrentVersion632285F659b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasRefreshAuthFunctionCurrentVersion632285F675fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"}}",
             ],
           ],
         },
-        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"},"logApiResponseData":true}",
+        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"}}",
         "InstallLatestAwsSdk": false,
         "ServiceToken": {
           "Fn::GetAtt": [
@@ -392,9 +404,9 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasRefreshAuthFunctionCurrentVersion632285F659b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasRefreshAuthFunctionCurrentVersion632285F675fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-RefreshAuthFunction-function-arn"}}",
             ],
           ],
         },
@@ -479,12 +491,15 @@ exports[`A simple example 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Timeout": 5,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "AuthLambdasSignOutFunctionCurrentVersion0576BBB159b63dcbbac821d4cb34a79cc8e3f8d4": {
+    "AuthLambdasSignOutFunctionCurrentVersion0576BBB175fb447891cea0a00a2c26c8b446b559": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdasSignOutFunction251863E4",
@@ -504,13 +519,13 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasSignOutFunctionCurrentVersion0576BBB159b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasSignOutFunctionCurrentVersion0576BBB175fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"}}",
             ],
           ],
         },
-        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"},"logApiResponseData":true}",
+        "Delete": "{"service":"SSM","action":"deleteParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"}}",
         "InstallLatestAwsSdk": false,
         "ServiceToken": {
           "Fn::GetAtt": [
@@ -524,9 +539,9 @@ exports[`A simple example 1`] = `
             [
               "{"service":"SSM","action":"putParameter","parameters":{"Name":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn","Value":"",
               {
-                "Ref": "AuthLambdasSignOutFunctionCurrentVersion0576BBB159b63dcbbac821d4cb34a79cc8e3f8d4",
+                "Ref": "AuthLambdasSignOutFunctionCurrentVersion0576BBB175fb447891cea0a00a2c26c8b446b559",
               },
-              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"},"logApiResponseData":true}",
+              "","Type":"String","Overwrite":true},"region":"eu-west-1","physicalResourceId":{"id":"/cf/region/us-east-1/stack/Stack1/c822e4a2b5e248e64ee706fb7d4af8c80d9b03944e-SignOutFunction-function-arn"}}",
             ],
           ],
         },
@@ -581,7 +596,7 @@ exports[`A simple example 2`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -708,7 +723,7 @@ exports[`A simple example 2`] = `
               {
                 "Ref": "UserPoolUserPoolClient40176907",
               },
-              ""},"logApiResponseData":true}",
+              ""}}",
             ],
           ],
         },
@@ -739,7 +754,7 @@ exports[`A simple example 2`] = `
               {
                 "Ref": "UserPoolUserPoolClient40176907",
               },
-              ""},"logApiResponseData":true}",
+              ""}}",
             ],
           ],
         },
@@ -790,14 +805,14 @@ exports[`A simple example 2`] = `
               "","CallbackURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
               "/auth/callback"],"LogoutURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
@@ -813,7 +828,7 @@ exports[`A simple example 2`] = `
               {
                 "Ref": "UserPoolUserPoolClient40176907",
               },
-              ""},"logApiResponseData":true}",
+              ""}}",
             ],
           ],
         },
@@ -835,14 +850,14 @@ exports[`A simple example 2`] = `
               "","CallbackURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
               "/auth/callback"],"LogoutURLs":["https://",
               {
                 "Fn::GetAtt": [
-                  "CloudFrontDistributionCFDistribution599ADCC4",
+                  "CloudFrontDistributionBA64CE3A",
                   "DomainName",
                 ],
               },
@@ -858,7 +873,7 @@ exports[`A simple example 2`] = `
               {
                 "Ref": "UserPoolUserPoolClient40176907",
               },
-              ""},"logApiResponseData":true}",
+              ""}}",
             ],
           ],
         },
@@ -1171,23 +1186,70 @@ exports[`A simple example 2`] = `
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
-    "CloudFrontDistributionCFDistribution599ADCC4": {
+    "BucketPolicyE9A3008A": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "Bucket83908E77",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:GetObject",
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":cloudfront::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":distribution/",
+                        {
+                          "Ref": "CloudFrontDistributionBA64CE3A",
+                        },
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "Bucket83908E77",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "CloudFrontDistributionBA64CE3A": {
       "Properties": {
         "DistributionConfig": {
           "CacheBehaviors": [
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1200,22 +1262,12 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/callback",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1228,22 +1280,12 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/refresh",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
             {
-              "AllowedMethods": [
-                "GET",
-                "HEAD",
-              ],
-              "CachedMethods": [
-                "GET",
-                "HEAD",
-              ],
+              "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
               "Compress": true,
-              "ForwardedValues": {
-                "QueryString": true,
-              },
               "LambdaFunctionAssociations": [
                 {
                   "EventType": "viewer-request",
@@ -1256,26 +1298,13 @@ exports[`A simple example 2`] = `
                 },
               ],
               "PathPattern": "/auth/sign-out",
-              "TargetOriginId": "origin1",
+              "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
           ],
           "DefaultCacheBehavior": {
-            "AllowedMethods": [
-              "GET",
-              "HEAD",
-            ],
-            "CachedMethods": [
-              "GET",
-              "HEAD",
-            ],
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
             "Compress": true,
-            "ForwardedValues": {
-              "Cookies": {
-                "Forward": "none",
-              },
-              "QueryString": false,
-            },
             "LambdaFunctionAssociations": [
               {
                 "EventType": "viewer-request",
@@ -1296,34 +1325,46 @@ exports[`A simple example 2`] = `
                 },
               },
             ],
-            "TargetOriginId": "origin1",
+            "TargetOriginId": "Stack2CloudFrontDistributionOrigin1B1B60C21",
             "ViewerProtocolPolicy": "redirect-to-https",
           },
-          "DefaultRootObject": "index.html",
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
           "Origins": [
             {
-              "ConnectionAttempts": 3,
-              "ConnectionTimeout": 10,
               "DomainName": {
                 "Fn::GetAtt": [
                   "Bucket83908E77",
                   "RegionalDomainName",
                 ],
               },
-              "Id": "origin1",
-              "S3OriginConfig": {},
+              "Id": "Stack2CloudFrontDistributionOrigin1B1B60C21",
+              "OriginAccessControlId": {
+                "Fn::GetAtt": [
+                  "CloudFrontDistributionOrigin1S3OriginAccessControlD0BFFDCA",
+                  "Id",
+                ],
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+              },
             },
           ],
-          "PriceClass": "PriceClass_100",
-          "ViewerCertificate": {
-            "CloudFrontDefaultCertificate": true,
-          },
         },
       },
       "Type": "AWS::CloudFront::Distribution",
+    },
+    "CloudFrontDistributionOrigin1S3OriginAccessControlD0BFFDCA": {
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": "Stack2CloudFrontDistributionOrigin1S3OriginAccessControl32B559A7",
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4",
+        },
+      },
+      "Type": "AWS::CloudFront::OriginAccessControl",
     },
     "UserPool6BA7E5F2": {
       "DeletionPolicy": "Retain",
@@ -1401,7 +1442,7 @@ exports[`A simple example 2`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
       },
       "Type": "AWS::Lambda::Function",
     },
@@ -1455,13 +1496,17 @@ exports[`A simple example 2`] = `
           },
         },
         "Handler": "framework.onEvent",
+        "LoggingConfig": {
+          "ApplicationLogLevel": "FATAL",
+          "LogFormat": "JSON",
+        },
         "Role": {
           "Fn::GetAtt": [
             "henristcloudfrontauthgeneratesecretproviderProviderframeworkonEventServiceRoleEE714F1C",
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1495,6 +1540,16 @@ exports[`A simple example 2`] = `
                   ],
                 },
               ],
+            },
+            {
+              "Action": "lambda:GetFunction",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "henristcloudfrontauthgeneratesecretproviderFunction3D1AFA99",
+                  "Arn",
+                ],
+              },
             },
           ],
           "Version": "2012-10-17",
@@ -1558,13 +1613,17 @@ exports[`A simple example 2`] = `
           },
         },
         "Handler": "framework.onEvent",
+        "LoggingConfig": {
+          "ApplicationLogLevel": "FATAL",
+          "LogFormat": "JSON",
+        },
         "Role": {
           "Fn::GetAtt": [
             "henristlambdaconfigproviderProviderframeworkonEventServiceRole9AA104AD",
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1629,6 +1688,16 @@ exports[`A simple example 2`] = `
                   ],
                 },
               ],
+            },
+            {
+              "Action": "lambda:GetFunction",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "henristlambdaconfigproviderUpdateCodeFnBF8DF66B",
+                  "Arn",
+                ],
+              },
             },
           ],
           "Version": "2012-10-17",

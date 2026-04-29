@@ -6,7 +6,15 @@
   "packageRules": [
     {
       "description": "Create release for package updates that is part of the bundled code",
-      "packageNames": ["aws-sdk", "axios", "cookie", "jsonwebtoken", "jwks-rsa", "typescript", "webpack"],
+      "packageNames": [
+        "aws-sdk",
+        "axios",
+        "cookie",
+        "jsonwebtoken",
+        "jwks-rsa",
+        "typescript",
+        "webpack"
+      ],
       "semanticCommitType": "fix",
       "matchFiles": ["package.json"]
     }

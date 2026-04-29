@@ -53,7 +53,6 @@ export async function validate(
 
   // The JWT contains a "kid" claim, key id, that tells which key
   // was used to sign the token.
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const kid = decodedToken["header"]["kid"] as string
   const jwk = await getSigningKey(jwksUri, kid)
   if (jwk instanceof Error) {
@@ -75,7 +74,6 @@ export async function validate(
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function decodeIdToken(jwt: string): IdTokenPayload {
   const tokenBody = jwt.split(".")[1]
   const decodableTokenBody = tokenBody.replace(/-/g, "+").replace(/_/g, "/")
